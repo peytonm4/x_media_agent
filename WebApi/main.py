@@ -4,7 +4,11 @@ from sqlalchemy.orm import sessionmaker, declarative_base, Session
 import tweepy
 from langchain.chat_models import ChatOpenAI
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 import os
+
+# Automatically load the .env file from the current directory
+load_dotenv()
 
 # FastAPI app
 app = FastAPI()
