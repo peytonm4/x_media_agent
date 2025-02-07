@@ -51,7 +51,7 @@ auth.set_access_token(X_ACCESS_TOKEN, X_ACCESS_SECRET)
 api = tweepy.API(auth)
 
 # LangChain setup
-llm = ChatOpenAI(model_name="gpt-4", temperature=0.5)
+llm = ChatOpenAI(model_name="gpt-4", temperature=0.3)
 
 def fetch_tweets(username: str):
     """Fetches tweets from the past 24 hours."""
@@ -65,7 +65,7 @@ def fetch_tweets(username: str):
     return [tweet.full_text for tweet in tweets if tweet.created_at.strftime('%Y-%m-%d') >= since_date]
 
 def summarize_tweets(tweets):
-    """Summarizes the tweets using LangChain."""
+    """Summarizes the tweets by infusing tweet list with prompt and sending over to OpenAI."""
     tweet_list = "***".join(tweets)
     prompt = """Your task is to generate a comprehensive summary report that includes all tweets, but with the following conditions:
 
@@ -75,7 +75,8 @@ Financial Content First: Reorder the tweets so that all tweets containing financ
 Non-Financial Content Afterwards: After the financial tweets, include the remaining tweets (e.g., personal updates, lifestyle content).
 Financial Data Handling:
 
-Consolidation of Entities: For tweets with financial content, if both a company name and its corresponding ticker symbol appear in the text, you do not need to capture them separately. Instead, consolidate the information so that the financial entity is represented just once along with all the associated data (such as news about earnings reports, stock price surges, or product announcements).
+Consolidation of Entities: For tweets with financial content, if both a company name and its corresponding ticker symbol appear in the text, you do not need to capture them separately. Instead, consolidate the information so that the financial 
+entity is represented just once along with all the associated data (such as news about earnings reports, stock price surges, or product announcements).
 Associated Data Inclusion: Ensure that any financial details (e.g., “earnings report,” “new battery technology,” “stock surge”) are clearly captured with the tweet’s content.
 Report Format:
 
@@ -96,7 +97,8 @@ tweets:
 [{tweet_list}]
 
 
-Using this prompt, generate a summary report that follows the above instructions. Make sure the final output is clear, well-organized, and includes all tweets with the financial content appearing first."""
+Using this prompt, generate a summary report that follows the above instructions. Make sure the final output is clear, well-organized, 
+and includes all tweets with the financial content appearing first."""
     return llm.predict(prompt)
 
 @app.post("/generate_report/")
