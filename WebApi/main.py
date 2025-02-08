@@ -16,7 +16,7 @@ X_API_KEY = os.getenv("X_API_KEY")
 X_API_SECRET = os.getenv("X_API_SECRET")
 X_ACCESS_TOKEN = os.getenv("X_ACCESS_TOKEN")
 X_ACCESS_SECRET = os.getenv("X_ACCESS_SECRET")
-
+OPENAI_API_KEY - os.getenv("OPENAI_API_KEY")
 
 # FastAPI app
 app = FastAPI()
@@ -51,7 +51,7 @@ auth.set_access_token(X_ACCESS_TOKEN, X_ACCESS_SECRET)
 api = tweepy.API(auth)
 
 # LangChain setup
-llm = ChatOpenAI(model_name="gpt-4", temperature=0.3)
+llm = ChatOpenAI(model_name="gpt-4", temperature=0.3, api_key=OPENAI_API_KEY)
 
 def fetch_tweets(username: str):
     """Fetches tweets from the past 24 hours."""
