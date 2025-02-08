@@ -7,9 +7,11 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 import os
 
+
+# FastAPI app
+app = FastAPI()
 # Automatically load the .env file from the current directory
 load_dotenv()
-
 
 # X API Credentials (Set in environment variables)
 X_API_KEY = os.getenv("X_API_KEY")
@@ -17,9 +19,6 @@ X_API_SECRET = os.getenv("X_API_SECRET")
 X_ACCESS_TOKEN = os.getenv("X_ACCESS_TOKEN")
 X_ACCESS_SECRET = os.getenv("X_ACCESS_SECRET")
 OPENAI_API_KEY - os.getenv("OPENAI_API_KEY")
-
-# FastAPI app
-app = FastAPI()
 
 # Database setup
 DATABASE_URL = "postgresql://user:password@localhost:5432/media_agent"

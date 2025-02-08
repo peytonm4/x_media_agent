@@ -39,7 +39,7 @@ export default function MediaAgent() {
     setLoading(true);
     setError("");
     try {
-      const response = await axios.get("/generate_report/", { username });
+      const response = await axios.post("/generate_report/", { username });
       setReport(response.data.report);
       //fetchRecentSearches(); // Refresh recent searches
     } catch (error) {
